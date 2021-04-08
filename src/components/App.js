@@ -11,12 +11,12 @@ class App extends Component {
     };
     this.renderChoice = this.renderBallOrButton.bind(this);
     this.buttonClickHandler = this.buttonClickHandler.bind(this);
+    this.arrowRightKey = this.arrowRightKey.bind(this);
   }
 
   buttonClickHandler() {
-    this.setState({
-      renderBall: true,
-    });
+    this.setState({renderBall:true})
+    
   }
   renderBallOrButton() {
     if (this.state.renderBall) {
@@ -33,21 +33,27 @@ class App extends Component {
       );
     }
   }
-  keyClicked(e) {
-    if (e.keyCode == 39) {
-      let position = this.state.posi + 5;
-      let ballPosition = {};
-      ballPosition.left = position + "px";
-      this.setState({
-        posi: position,
-        ballPosition: ballPosition,
-      });
+
+  arrowRightKey(event){
+    console.log("run")
+    if(event.keyCode === 39){
+      if(this.state.renderBall){
+        const newPosition = this.state.posi + 5;
+        this.setState({
+          posi : newPosition,
+           ballPosition: { left: newPosition +"px" }
+
+        })
+      }
     }
+   
   }
+
+  
   // bind ArrowRight keydown event
   componentDidMount() {
-    this.keyClicked = this.keyClicked.bind(this);
-    window.addEventListener("keydown", this.keyClicked);
+    document.addEventListener( "keydown",this.arrowRightKey)
+    
   }
 
   render() {
